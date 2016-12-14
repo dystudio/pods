@@ -2286,6 +2286,9 @@ class PodsData {
 				}
             }
             else {
+	            if( isset( $match[ 'meta_type' ] ) && in_array( $match[ 'meta_type' ], array( 'DECIMAL', 'DATE', 'DATETIME' ) ) ){
+		            $match[ 'field' ] = sprintf( 'CAST( `%s.meta_value` as %s )', $match[ 'field' ], $match[ 'meta_type' ] );
+				}
                 $query_field = self::query_field( $field, $match, $pod, $params );
 
                 if ( !empty( $query_field ) ) {
@@ -2341,6 +2344,7 @@ class PodsData {
 		if ( 1 == $params->query_field_level ) {
 			$params->query_field_level = 0;
 		}
+
 
         return $query_fields;
     }
